@@ -33,13 +33,13 @@ function render(path){
 }
 
 
-// 渲染 title
+// Site title
 function title(path){
     path = decodeURI(path);
     $('title').html(document.siteName+' - '+path);
 }
 
-// 渲染导航栏
+// Navigation Bar
 function nav(path){
     var html = "";
     html += `<a href="/" class="mdui-typo-headline folder">${document.siteName}</a>`;
@@ -59,7 +59,7 @@ function nav(path){
     $('#nav').html(html);
 }
 
-// 渲染Filename列表
+// List Of File
 function list(path){
 	var content = `
 	<div id="head_md" class="mdui-typo" style="display:none;padding: 20px 0;"></div>
@@ -68,7 +68,7 @@ function list(path){
 	  <ul class="mdui-list"> 
 	   <li class="mdui-list-item th"> 
 	    <div class="mdui-col-xs-12 mdui-col-sm-7">
-	     File Name
+	     FileName
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right">
@@ -76,7 +76,7 @@ function list(path){
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right">
-	     File Size
+	     FileSize
 	<i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i>
 	    </div> 
 	    </li> 
@@ -97,7 +97,7 @@ function list(path){
     $.post(path,'{"password":"'+password+'"}', function(data,status){
         var obj = jQuery.parseJSON(data);
         if(typeof obj != 'null' && obj.hasOwnProperty('error') && obj.error.code == '401'){
-            var pass = prompt("目录加密, 请输入密码","");
+            var pass = prompt("Authentication needed, Please Enter Password","");
             localStorage.setItem('password'+path, pass);
             if(pass != null && pass != ""){
                 list(path);
@@ -204,7 +204,7 @@ function file(path){
 	}
 }
 
-// Filename展示 |html|php|css|go|java|js|json|txt|sh|md|
+// Display File Type |html|php|css|go|java|js|json|txt|sh|md|
 function file_code(path){
 	var type = {
 		"html":"html",
@@ -226,7 +226,7 @@ function file_code(path){
 <pre id="editor" ></pre>
 </div>
 <div class="mdui-textfield">
-	<label class="mdui-textfield-label">下载地址</label>
+	<label class="mdui-textfield-label">Download Link</label>
 	<input class="mdui-textfield-input" type="text" value="${href}"/>
 </div>
 <a href="${href}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
@@ -257,84 +257,84 @@ function file_code(path){
 	});
 }
 
-// Filename展示 视频 |mp4|webm|avi|
+// Video File Type |mp4|webm|avi|
 function file_video(path){
-	var File Size = window.location.origin + path;
-	var playBtn = `<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="potplayer://${File Size}"><i class="mdui-icon material-icons">&#xe038;</i>在 potplayer 中播放</a>`;
-	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
-	    playBtn = `	<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="intent:${File Size}#Intent;package=com.mxtech.videoplayer.ad;S.title=${path};end"><i class="mdui-icon material-icons">&#xe039;</i>在mxplayer中播放</a>`;
+	var FileSize = window.location.origin + path;
+	var playBtn = `<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="potplayer://${FileSize}"><i class="mdui-icon material-icons">&#xe038;</i>Play Via Potplayer</a>`;
+	if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //Mobile
+	    playBtn = `	<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="intent:${FileSize}#Intent;package=com.mxtech.videoplayer.ad;S.title=${path};end"><i class="mdui-icon material-icons">&#xe039;</i>在mxplayer中播放</a>`;
 	}
 	var content = `
 <div class="mdui-container-fluid">
 	<br>
 	<video class="mdui-video-fluid mdui-center" preload controls>
-	  <source src="${File Size}" type="video/mp4">
+	  <source src="${FileSize}" type="video/mp4">
 	</video>
 	<br>${playBtn}
 	<!-- 固定标签 -->
 	<div class="mdui-textfield">
-	  <label class="mdui-textfield-label">下载地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${File Size}"/>
+	  <label class="mdui-textfield-label">Download Link</label>
+	  <input class="mdui-textfield-input" type="text" value="${FileSize}"/>
 	</div>
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">HTML Embed Html</label>
-	  <textarea class="mdui-textfield-input"><video><source src="${File Size}" type="video/mp4"></video></textarea>
+	  <textarea class="mdui-textfield-input"><video><source src="${FileSize}" type="video/mp4"></video></textarea>
 	</div>
 </div>
-<a href="${File Size}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
+<a href="${FileSize}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
 	`;
 	$('#content').html(content);
 }
 
 // Filename展示 音频 |mp3|m4a|wav|ogg|
 function file_audio(path){
-	var File Size = window.location.origin + path;
+	var FileSize = window.location.origin + path;
 	var content = `
 <div class="mdui-container-fluid">
 	<br>
 	<audio class="mdui-center" preload controls>
-	  <source src="${File Size}"">
+	  <source src="${FileSize}"">
 	</audio>
 	<br>
 	<!-- 固定标签 -->
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">下载地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${File Size}"/>
+	  <input class="mdui-textfield-input" type="text" value="${FileSize}"/>
 	</div>
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">HTML Embed Html</label>
-	  <textarea class="mdui-textfield-input"><audio><source src="${File Size}"></audio></textarea>
+	  <textarea class="mdui-textfield-input"><audio><source src="${FileSize}"></audio></textarea>
 	</div>
 </div>
-<a href="${File Size}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
+<a href="${FileSize}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
 	`;
 	$('#content').html(content);
 }
 
 
-// 图片展示
+// Image
 function file_image(path){
-	var File Size = window.location.origin + path;
+	var FileSize = window.location.origin + path;
 	var content = `
 <div class="mdui-container-fluid">
 	<br>
-	<img class="mdui-img-fluid" src="${File Size}"/>
+	<img class="mdui-img-fluid" src="${FileSize}"/>
 	<br>
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">下载地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${File Size}"/>
+	  <input class="mdui-textfield-input" type="text" value="${FileSize}"/>
 	</div>
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">HTML 引用</label>
-	  <input class="mdui-textfield-input" type="text" value="<img src='${File Size}' />"/>
+	  <input class="mdui-textfield-input" type="text" value="<img src='${FileSize}' />"/>
 	</div>
         <div class="mdui-textfield">
 	  <label class="mdui-textfield-label">Markdown Embed Html</label>
-	  <input class="mdui-textfield-input" type="text" value="![](${File Size})"/>
+	  <input class="mdui-textfield-input" type="text" value="![](${FileSize})"/>
 	</div>
         <br>
 </div>
-<a href="${File Size}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
+<a href="${FileSize}" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
 	`;
 	$('#content').html(content);
 }
@@ -403,7 +403,7 @@ function markdown(el, data){
     }
 }
 
-// 监听回退事件
+// 
 window.onpopstate = function(){
     var path = window.location.pathname;
     render(path);
@@ -414,16 +414,16 @@ $(function(){
     init();
     var path = window.location.pathname;
     $("body").on("click",'.folder',function(){
-        var File Size = $(this).attr('href');
-        history.pushState(null, null, File Size);
-        render(File Size);
+        var FileSize = $(this).attr('href');
+        history.pushState(null, null, FileSize);
+        render(FileSize);
         return false;
     });
 
     $("body").on("click",'.view',function(){
-        var File Size = $(this).attr('href');
-        history.pushState(null, null, File Size);
-        render(File Size);
+        var FileSize = $(this).attr('href');
+        history.pushState(null, null, FileSize);
+        render(FileSize);
         return false;
     });
     
