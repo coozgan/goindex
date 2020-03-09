@@ -37,7 +37,7 @@ function nav(path){
     $('#heading').html('Index of '+path);
 }
 
-// 渲染文件列表
+// 渲染File Name列表
 function list(path){
 	var content = `
 <tr><th class="file-name">Name</th><th class="file-size">Size</th><th class="file-date-modified">Date Modified</th></tr>
