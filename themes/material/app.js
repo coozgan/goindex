@@ -59,7 +59,7 @@ function nav(path){
     $('#nav').html(html);
 }
 
-// 渲染文件列表
+// 渲染Filename列表
 function list(path){
 	var content = `
 	<div id="head_md" class="mdui-typo" style="display:none;padding: 20px 0;"></div>
@@ -68,15 +68,15 @@ function list(path){
 	  <ul class="mdui-list"> 
 	   <li class="mdui-list-item th"> 
 	    <div class="mdui-col-xs-12 mdui-col-sm-7">
-	     文件
+	     Filename
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right">
-	     修改时间
+	     Date Modified
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right">
-	     大小
+	     File Size
 	<i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i>
 	    </div> 
 	    </li> 
@@ -179,7 +179,7 @@ function get_file(path, file, callback){
 
 
 
-// 文件展示 ?a=view
+// Filename展示 ?a=view
 function file(path){
 	var name = path.split('/').pop();
 	var ext = name.split('.').pop().toLowerCase().replace(`?a=view`,"");
@@ -204,7 +204,7 @@ function file(path){
 	}
 }
 
-// 文件展示 |html|php|css|go|java|js|json|txt|sh|md|
+// Filename展示 |html|php|css|go|java|js|json|txt|sh|md|
 function file_code(path){
 	var type = {
 		"html":"html",
@@ -257,7 +257,7 @@ function file_code(path){
 	});
 }
 
-// 文件展示 视频 |mp4|webm|avi|
+// Filename展示 视频 |mp4|webm|avi|
 function file_video(path){
 	var url = window.location.origin + path;
 	var playBtn = `<a class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" href="potplayer://${url}"><i class="mdui-icon material-icons">&#xe038;</i>在 potplayer 中播放</a>`;
@@ -286,7 +286,7 @@ function file_video(path){
 	$('#content').html(content);
 }
 
-// 文件展示 音频 |mp3|m4a|wav|ogg|
+// Filename展示 音频 |mp3|m4a|wav|ogg|
 function file_audio(path){
 	var url = window.location.origin + path;
 	var content = `
